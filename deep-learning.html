@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep learning</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --editor-bg: #252526;
+            --line-number: #858585;
+            --border-color: #3c3c3c;
+            --text-color: #d4d4d4;
+            --comment: #6A9955;
+            --keyword: #569CD6;
+            --string: #CE9178;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .editor-window {
+            background-color: var(--editor-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            width: 80vw; /* ЗМІНА: 80% ширини браузера */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            position: relative;
+        }
+        .editor-header {
+            background-color: #333;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9em;
+        }
+        .tab.active {
+            background-color: var(--editor-bg);
+            padding: 5px 12px;
+            border-radius: 5px 5px 0 0;
+            display: inline-block;
+            color: #fff;
+        }
+        .code-container {
+            padding: 20px 20px 20px 60px; /* Тут НЕМАЄ відступу для фото */
+            position: relative;
+        }
+        .code-container pre {
+            counter-reset: line;
+            margin: 0;
+            font-size: 1.4rem; /* ЗМІНА: Значно збільшено шрифт */
+        }
+        .code-container pre code .line {
+            display: block;
+            line-height: 1.6;
+            min-height: 1.6em;
+        }
+        .code-container pre code .line::before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 20px;
+            width: 30px;
+            text-align: right;
+            color: var(--line-number);
+            user-select: none;
+        }
+        
+        .md-h1 { color: var(--keyword); font-size: 1.6em; font-weight: bold; }
+        .md-p { color: var(--text-color); margin-top: 1em; }
+        .md-link { color: var(--string); text-decoration: none; }
+        .md-link:hover { text-decoration: underline; }
+        .comment { color: var(--comment); }
+    </style>
+</head>
+<body>
+
+    <div class="editor-window">
+        <div class="editor-header">
+            <span class="tab active">deep-learning.md</span>
+        </div>
+        <div class="code-container">
+            <pre><code><span class="line"><span class="md-h1"># Deep learning</span></span>
+<span class="line"></span>
+<span class="line"><span class="md-p">This is a content page for Deep learning.</span></span>
+<span class="line"></span>
+<span class="line"><span class="md-p">You can fill this page with details...</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Add more content here...</span></span>
+<span class="line"></span>
+<span class="line"><span class="md-p">Go back to <a href="index.html" class="md-link">[profile.py]</a></span></span>
+<span class="line"></span></code></pre>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -3,179 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roman Radchenko | Developer Portfolio</title>
+    <title>Roman Radchenko | profile.py</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* --- Global Styles --- */
         :root {
-            --bg-color: #121212;
-            --card-color: #1e1e1e;
-            --primary-color: #007bff; /* Яскравий синій акцент */
-            --text-color: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --border-color: #333333;
+            --bg-color: #1e1e1e; /* VS Code BG */
+            --editor-bg: #252526; /* VS Code Editor BG */
+            --line-number: #858585;
+            --border-color: #3c3c3c;
+            --text-color: #d4d4d4;
+            --comment: #6A9955;
+            --keyword: #569CD6;
+            --function: #DCDCAA;
+            --string: #CE9178;
+            --property: #9CDCFE;
+            --class: #4E94CE;
+            --operator: #d4d4d4;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Fira Code', monospace;
             background-color: var(--bg-color);
             color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: grid;
+            place-items: center;
             min-height: 100vh;
             padding: 20px;
         }
 
-        /* --- Main Card --- */
-        .card {
-            background-color: var(--card-color);
-            border-radius: 16px;
+        .editor-window {
+            background-color: var(--editor-bg);
             border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
-            width: 100%;
-            padding: 40px;
-            text-align: center;
+            border-radius: 8px;
+            width: 80vw; /* ЗМІНА: 80% ширини браузера */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             overflow: hidden;
-            position: relative;
+            position: relative; /* ЗМІНА: Потрібно для позиціонування фото */
         }
 
-        /* --- Profile Image --- */
+        .editor-header {
+            background-color: #333;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9em;
+        }
+
+        .tab.active {
+            background-color: var(--editor-bg);
+            padding: 5px 12px;
+            border-radius: 5px 5px 0 0;
+            display: inline-block;
+            color: #fff;
+        }
+
+        .code-container {
+            /* ЗМІНА: Додано padding-right (220px), щоб текст не заходив під фото */
+            padding: 20px 220px 20px 60px;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .code-container pre {
+            counter-reset: line;
+            margin: 0;
+            font-size: 1.4rem; /* ЗМІНА: Значно збільшено шрифт */
+        }
+
+        .code-container pre code .line {
+            display: block;
+            line-height: 1.6;
+            min-height: 1.6em;
+        }
+
+        .code-container pre code .line::before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 20px;
+            width: 30px;
+            text-align: right;
+            color: var(--line-number);
+            user-select: none;
+        }
+
+        /* --- Syntax Highlighting --- */
+        .comment { color: var(--comment); }
+        .keyword { color: var(--keyword); }
+        .function { color: var(--function); }
+        .string { color: var(--string); }
+        .property { color: var(--property); }
+        .class { color: var(--class); font-weight: bold; }
+        .operator { color: var(--operator); }
+        .brackets { color: #ffd700; }
+        .link { color: var(--string); text-decoration: none; }
+        .link:hover { text-decoration: underline; }
+
+        /* --- Profile Image (ЗМІНЕНО) --- */
         .profile-img {
+            position: absolute; /* ЗМІНА: Абсолютне позиціонування */
+            top: 60px; /* ЗМІНА: Відступ від верху (нижче хедера) */
+            right: 20px; /* ЗМІНА: Відступ праворуч */
             width: 160px;
             height: 160px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 6px solid var(--primary-color);
-            margin-bottom: 25px;
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+            border: 3px solid var(--class);
+            clip-path: circle(90%);
+            z-index: 10; /* Про всяк випадок, щоб було поверх */
         }
-
-        /* --- Text Content --- */
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-
-        .location {
-            font-size: 1.1rem;
-            font-weight: 300;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .bio {
-            font-size: 1.1rem;
-            font-weight: 400;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .bio strong {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        /* --- Tech Keywords --- */
-        .keywords {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .keyword {
-            background-color: rgba(0, 123, 255, 0.1);
-            border: 1px solid rgba(0, 123, 255, 0.3);
-            color: var(--primary-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* --- Social Links --- */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-        }
-
-        .social-links a {
-            color: var(--text-secondary);
-            font-size: 2rem;
-            text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: scale(1.1);
-        }
-
     </style>
 </head>
 <body>
 
-    <main class="card">
-        <img src="profile.png" alt="Profile photo of Roman Radchenko" class="profile-img">
-
-        <h1>Roman Radchenko</h1>
-        <p class="location"><i class="fa-solid fa-location-dot"></i> Kyiv, Ukraine</p>
-
-        <p class="bio">
-            Hobbyist exploring the frontiers of 
-            <strong>Deep Learning</strong> and <strong>Blockchain</strong>. 
-            Passionate about building decentralized, intelligent systems that solve real-world problems.
-        </p>
-
-        <div class="keywords">
-            <span class="keyword">Deep Learning</span>
-            <span class="keyword">Blockchain</span>
-            <span class="keyword">AI / ML</span>
-            <span class="keyword">Web3</span>
-            <span class="keyword">Smart Contracts</span>
-            <span class="keyword">Python</span>
-            <span class="keyword">FinTech</span>
+    <div class="editor-window">
+        <div class="editor-header">
+            <span class="tab active">profile.py</span>
         </div>
+        
+        <img src="img.png" alt="Roman Radchenko" class="profile-img">
 
-        <div class="social-links">
-            <a href="https://github.com/radchr" target="_blank" title="GitHub">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/roman-radchenko-26b37064/" target="_blank" title="LinkedIn">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <a href="#" target="_blank" title="Telegram">
-                <i class="fa-brands fa-telegram"></i>
-            </a>
-            <a href="mailto:your-email@example.com" target="_blank" title="Email">
-                <i class="fa-solid fa-envelope"></i>
-            </a>
-             <a href="#" target="_blank" title="Facebook">
-                <i class="fa-brands fa-facebook"></i>
-            </a>
-             <a href="#" target="_blank" title="Twitter">
-                <i class="fa-brands fa-twitter"></i>
-            </a>
+        <div class="code-container">
+            <pre><code><span class="line"><span class="keyword">class</span> <span class="class">Roman_Radchenko</span>:</span>
+<span class="line">
+<span class="line">    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="property">self</span>):</span>
+<span class="line">        <span class="property">self</span>.<span class="property">name</span> <span class="operator">=</span> <span class="string">"Roman Radchenko"</span></span>
+<span class="line">        <span class="property">self</span>.<span class="property">location</span> <span class="operator">=</span> <span class="string">"Kyiv, Ukraine"</span></span>
+<span class="line">        <span class="property">self</span>.<span class="property">bio</span> <span class="operator">=</span> <span class="string">"Hobbyist exploring..."</span></span>
+<span class="line">
+<span class="line">    <span class="comment"># Core Interests</span></span>
+<span class="line">    <span class="keyword">def</span> <span class="function">get_interests</span>(<span class="property">self</span>):</span>
+<span class="line">        <span class="keyword">return</span> <span class="brackets">[</span></span>
+<span class="line">            <span class="string">"<a href="deep-learning.html" class="link">Deep Learning</a>"</span>,</span>
+<span class="line">            <span class="string">"<a href="blockchain.html" class="link">Blockchain</a>"</span>,</span>
+<span class="line">            <span class="string">"<a href="ai-ml.html" class="link">AI / ML</a>"</span>,</span>
+<span class="line">            <span class="string">"<a href="web3.html" class="link">Web3</a>"</span>,</span>
+<span class="line">            <span class="string">"<a href="smart-contracts.html" class="link">Smart Contracts</a>"</span>,</span>
+<span class="line">            <span class="string">"<a href="python.html" class="link">Python</a>"</span>,</span>
+<span class="line">            <span class="string">"<a href="fintech.html" class="link">FinTech</a>"</span></span>
+<span class="line">        <span class="brackets">]</span></span>
+<span class="line">
+<span class="line">    <span class="comment"># Social Links</span></span>
+<span class="line">    <span class="keyword">def</span> <span class="function">get_socials</span>(<span class="property">self</span>):</span>
+<span class="line">        <span class="keyword">return</span> <span class="brackets">{</span></span>
+<span class="line">            <span class="string">"github"</span>: <span class="string">"<a href="https://github.com/radchr" target="_blank" class="link">.../github.com/radchr</a>"</span>,</span>
+<span class="line">            <span class="string">"linkedin"</span>: <span class="string">"<a href="https://www.linkedin.com/in/roman-radchenko-26b37064/" target="_blank" class="link">.../linkedin.com/in/...</a>"</span>,</span>
+<span class="line">        <span class="brackets">}</span></span>
+<span class="line"></span></code></pre>
         </div>
-    </main>
+    </div>
 
 </body>
 </html>
